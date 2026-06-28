@@ -643,6 +643,13 @@ elif navigation == "📊 BI Risk Dashboard":
         
         # Standardize labels for plotting
         plot_df = pred_df.copy()
+        
+        # Clean and convert numeric columns in plotting dataframe to avoid Plotly validation errors (e.g., NaN in size)
+        for col in ['ApplicantIncome', 'CoapplicantIncome', 'LoanAmount']:
+            if col in plot_df.columns:
+                plot_df[col] = pd.to_numeric(plot_df[col], errors='coerce')
+                plot_df[col] = plot_df[col].fillna(pipeline['stats'].get(col, 0.0))
+                
         if color_col in plot_df.columns:
             plot_df[color_col] = plot_df[color_col].replace({0: 'Rejected', 1: 'Approved', 'N': 'Rejected', 'Y': 'Approved'})
             
