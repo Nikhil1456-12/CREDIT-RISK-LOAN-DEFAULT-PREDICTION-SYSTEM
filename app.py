@@ -115,6 +115,9 @@ st.markdown("""
             margin-top: 5px;
         }
         
+        .info-box, .info-box * {
+            color: #0f172a !important;
+        }
         .info-box {
             background-color: #f8fafc;
             border-left: 4px solid #3b82f6;
